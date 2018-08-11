@@ -6,6 +6,12 @@ export class MapService {
     }
 
     findByString = (string: String) => {
-        alert(string);
+        return new Promise((resolve, reject) => {
+            if(string.length == 0) {
+                reject('Vazio');
+            } else {
+                resolve(string);
+            }
+        })
     }
 }

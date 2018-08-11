@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MapService } from '../../service/maps';
-import Delivery from '../../models/Delivery';
 
 @Input()
 @Component({
@@ -9,16 +8,20 @@ import Delivery from '../../models/Delivery';
     templateUrl: 'create.html'
 })
 export class PageCreate {
-    newItem: any = {};
+    newItem: any = { to_name: '1', delivery_date: '2', location_from: '3',  location_to: '4'};
 
     constructor(public navCtrl: NavController, public mapService: MapService) {
     }
 
-    ionViewWillEnter = () => {
+    ionViewWillEnter() {
 
     }
 
-    save = () => {
-        this.mapService.findByString(this.newItem.location_from);
+    save() {
+        console.log('a');
+        this.mapService.findByString(this.newItem.location_from)
+        .then( res => {
+            alert('tratou: ' + res);
+        }).catch( err => alert(err));
     }
 }
