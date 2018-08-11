@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar color="dark">
+      <ion-title>
+        No Mapa
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+    <div *ngIf="item">
+        {{ item.name }}
+    </div>
+    <div *ngIf="!item && loaded">
+        Item não encontrado
+    </div>
+    <div *ngIf="!item && !loaded">
+        Carregando...
+    </div>
+</ion-content>
