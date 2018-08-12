@@ -1,19 +1,29 @@
 <ion-header>
     <ion-navbar color="dark">
       <ion-title>
-        No Mapa
+        Exibir no Mapa
       </ion-title>
     </ion-navbar>
   </ion-header>
 
 <ion-content padding>
-    <div *ngIf="item">
-        {{ item.name }}
-    </div>
-    <div *ngIf="!item && loaded">
-        Item não encontrado
-    </div>
-    <div *ngIf="!item && !loaded">
-        Carregando...
-    </div>
+    <ion-grid>
+        <ion-row>
+            <ion-col *ngIf="item">
+                <strong>Destinatário:</strong> {{ item.to_name }}<br>
+                <strong>Data de Entrega:</strong> {{ item.delivery_date }}<br>
+                <strong>Endereço Inicial:</strong> {{ item.location_from }}<br>
+                <strong>Endereço Final:</strong> {{ item.location_to }}<br>
+            </ion-col>
+            <div *ngIf="!item && loaded">
+                Item não encontrado
+            </div>
+            <div *ngIf="!item && !loaded">
+                Carregando...
+            </div>
+        </ion-row>
+        <ion-row>
+            <div id="map" #map></div>
+        </ion-row>  
+    </ion-grid>
 </ion-content>

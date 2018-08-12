@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ViewOnMap } from '../view-on-map/view-on-map';
 import { PageCreate } from '../create/create';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -10,15 +10,13 @@ import { PageCreate } from '../create/create';
 
 export class HomePage {
   public deliveries: any;
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private http: HttpClient) {
   }
 
-  ionViewDidEnter = () => {
-    console.log('entrou lista');
-    this.deliveries = [
-      { id: 1, name: 'aaaa' },
-      { id: 2, name: 'bbbb' },
-    ];
+  ionViewWillEnter = () => {
+    this.http.get('http://127.0.0.1:3000/deliveries').subscribe(res => {
+      this.deliveries = res;
+    })
   }
 
   open = (d) => {

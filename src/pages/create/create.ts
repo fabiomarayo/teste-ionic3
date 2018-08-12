@@ -1,5 +1,7 @@
+import { Observable } from 'rxjs';
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
 import { MapService } from '../../service/maps';
 
 @Input()
@@ -8,20 +10,27 @@ import { MapService } from '../../service/maps';
     templateUrl: 'create.html'
 })
 export class PageCreate {
-    newItem: any = { to_name: '1', delivery_date: '2', location_from: '3',  location_to: '4'};
+    newItem: any = { to_name: '', delivery_date: '', location_from: '',  location_to: ''};
 
-    constructor(public navCtrl: NavController, public mapService: MapService) {
+    constructor(
+        public navCtrl: NavController, 
+        public mapService: MapService, 
+        private http: HttpClient,
+        private alert: AlertController
+    ) {
     }
-
-    ionViewWillEnter() {
-
-    }
-
     save() {
-        console.log('a');
-        this.mapService.findByString(this.newItem.location_from)
-        .then( res => {
-            alert('tratou: ' + res);
-        }).catch( err => alert(err));
+        this.http.post<any>('http://127.0.0.1:3000/deliveries', this.newItem )
+        .catch((err: Response ) => {
+            alert('Ocorreu um erro: ' + err.statusText);
+            return Observable.throw(err.statusText);
+        })
+        .subscribe(res => { 
+            this.alert.create({
+                title: 'Cadastro de Entrega',
+                subTitle: 'Efetuado com sucesso!',
+                buttons: [{ text: 'OK', role: 'cancel', handler: () => { this.navCtrl.pop() }}]
+            }).present();
+        } );
     }
 }

@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { ViewOnMap } from '../pages/view-on-map/view-on-map';
 import { PageCreate } from '../pages/create/create';
 import { MapService } from '../service/maps';
+import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { MapService } from '../service/maps';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -32,6 +35,7 @@ import { MapService } from '../service/maps';
     StatusBar,
     SplashScreen,
     MapService,
+    GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
