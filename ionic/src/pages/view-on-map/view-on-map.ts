@@ -1,37 +1,32 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GoogleMaps, GoogleMap, LatLng } from '@ionic-native/google-maps'
+import { GoogleMaps, GoogleMap, GoogleMapsEvent } from '@ionic-native/google-maps'
 
 @Component({
     selector: 'page-view',
     templateUrl: 'view-on-map.html'
 })
 export class ViewOnMap {
-    @ViewChild('map') private mapElement: ElementRef;
     public item: any;
     public loaded: boolean;
     private id: string;
 
     public map: GoogleMap;
-    private location: LatLng;
-
     constructor(
         public navCtrl: NavController,
         private navParams: NavParams,
         private http: HttpClient,
         private alert: AlertController,
-        private platform: Platform,
-        private googleMaps: GoogleMaps
+        private platform: Platform
     ) {
         this.loaded = false;
         this.id = this.navParams.get('item').id;
-        this.location = new LatLng(42.346903, -71.135101);
     }
     findDelivery(id: string) {
         return new Promise((resolve, reject) => {
-            this.http.get(`http://127.0.0.1:3000/deliveries/${id}`)
+            this.http.get(`http://192.168.1.13:3000/deliveries/${id}`)
             .catch((err: Response) => {
                 reject(err.statusText);
                 return Observable.throw(err);
@@ -39,14 +34,25 @@ export class ViewOnMap {
             .subscribe(res => resolve(res));
         })
     }
+
+    loadMap() {
+        this.map = GoogleMaps.create('map',  {
+            camera: {
+               target: {
+                 lat: 43.0741904,
+                 lng: -89.3809802
+               },
+               zoom: 18,
+               tilt: 30
+             }
+          });
+          this.map.one(GoogleMapsEvent.MAP_READY).then(() => console.log('Map is ready!'));
+    }
     ionViewDidLoad = () => {
         this.findDelivery( this.id ).then(res => { 
             this.item = res;
-            this.map = GoogleMaps.create('map', {
-                camera: { target: this.location },
-                zoom: 8,
-                tilt: 30
-            });
+
+            this.loadMap();
 
         }).catch(err => { 
             this.alert.create({

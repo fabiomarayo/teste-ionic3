@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="dark">
     <ion-title>
-      Deli-ever
+      Delivery
     </ion-title>
     <ion-buttons end>
         <button ion-button icon-only (click)="add()">
@@ -14,7 +14,7 @@
 <ion-content padding>
   <ion-list>
     <button ion-item *ngFor="let d of deliveries" (click)="open(d)">
-      {{ d.to_name }}
+      {{ d.to_name }} às {{ d.delivery_date }}
     </button>
 
   </ion-list>

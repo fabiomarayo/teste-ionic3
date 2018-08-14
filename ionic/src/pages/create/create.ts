@@ -20,7 +20,7 @@ export class PageCreate {
     ) {
     }
     save() {
-        this.http.post<any>('http://127.0.0.1:3000/deliveries', this.newItem )
+        this.http.post<any>('http://192.168.1.13:3000/deliveries', this.newItem )
         .catch((err: Response ) => {
             alert('Ocorreu um erro: ' + err.statusText);
             return Observable.throw(err.statusText);
