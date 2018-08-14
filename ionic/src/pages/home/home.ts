@@ -14,7 +14,7 @@ export class HomePage {
   }
 
   ionViewWillEnter = () => {
-    this.http.get('http://192.168.1.13:8080/delivery').subscribe(res => {
+    this.http.get('http://colmeia.fabiomarayo.com.br/delivery').subscribe(res => {
       this.deliveries = res;
     })
   }

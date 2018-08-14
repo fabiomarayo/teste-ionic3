@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent } from '@ionic-native/google-maps'
 
@@ -17,15 +17,14 @@ export class ViewOnMap {
         public navCtrl: NavController,
         private navParams: NavParams,
         private http: HttpClient,
-        private alert: AlertController,
-        private platform: Platform
+        private alert: AlertController
     ) {
         this.loaded = false;
         this.id = this.navParams.get('item').id;
     }
     findDelivery(id: string) {
         return new Promise((resolve, reject) => {
-            this.http.get(`http://192.168.1.13:8080/delivery/${id}`)
+            this.http.get(`http://colmeia.fabiomarayo.com.br/delivery/${id}`)
             .subscribe( 
                 res => resolve(res),
                 err => reject(err)

@@ -21,7 +21,7 @@ export class PageCreate {
         let date = new Date();
     }
     save() {
-        this.http.post<any>('http://192.168.1.13:8080/delivery', this.newItem )
+        this.http.post<any>('http://colmeia.fabiomarayo.com.br/delivery', this.newItem )
         .subscribe(res => { 
             this.alert.create({
                 title: 'Cadastro de Entrega',
