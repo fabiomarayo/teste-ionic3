@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent } from '@ionic-native/google-maps'
 
 @Component({
@@ -26,12 +25,11 @@ export class ViewOnMap {
     }
     findDelivery(id: string) {
         return new Promise((resolve, reject) => {
-            this.http.get(`http://192.168.1.13:3000/deliveries/${id}`)
-            .catch((err: Response) => {
-                reject(err.statusText);
-                return Observable.throw(err);
-            })
-            .subscribe(res => resolve(res));
+            this.http.get(`http://192.168.1.13:8080/delivery/${id}`)
+            .subscribe( 
+                res => resolve(res),
+                err => reject(err)
+            );
         })
     }
 

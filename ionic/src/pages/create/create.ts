@@ -11,25 +11,27 @@ import { MapService } from '../../service/maps';
 })
 export class PageCreate {
     newItem: any = { to_name: '', delivery_date: '', location_from: '',  location_to: ''};
-
+    minDate: any;
     constructor(
         public navCtrl: NavController, 
         public mapService: MapService, 
         private http: HttpClient,
         private alert: AlertController
     ) {
+        let date = new Date();
     }
     save() {
-        this.http.post<any>('http://192.168.1.13:3000/deliveries', this.newItem )
-        .catch((err: Response ) => {
-            alert('Ocorreu um erro: ' + err.statusText);
-            return Observable.throw(err.statusText);
-        })
+        this.http.post<any>('http://192.168.1.13:8080/delivery', this.newItem )
         .subscribe(res => { 
             this.alert.create({
                 title: 'Cadastro de Entrega',
                 subTitle: 'Efetuado com sucesso!',
                 buttons: [{ text: 'OK', role: 'cancel', handler: () => { this.navCtrl.pop() }}]
+            }).present();
+        }, err => {
+            this.alert.create({
+                title:'Ocorreu um Erro',
+                buttons: ['OK']
             }).present();
         } );
     }
